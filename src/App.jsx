@@ -1,6 +1,25 @@
 import './App.css'
+import { useState, useEffect } from 'react';
+import { fetchAllPokemon } from './api'
+import { fetchPokemonById } from './api';
 
 function App() {
+
+  const [pokemons, setPokemons] = useState([]);
+  useEffect(() => {
+    async function getPoke() {
+      try {const response = await fetchAllPokemon();
+        setPokemons(response);
+      }
+        catch {console.error();
+        }
+      } getPoke()
+  }, []); 
+
+
+
+
+
 
   return (
     <>
@@ -10,6 +29,13 @@ function App() {
     Lets Go!
   </button>
 </div>
+<div>
+  {pokemons.map((pokemon) =>(
+    <div key={pokemon.id} >
+    </div>
+  ))}
+</div>
+
     </>
   )
 }
