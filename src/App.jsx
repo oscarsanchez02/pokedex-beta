@@ -1,15 +1,13 @@
 import "./App.css";
-// import { useState, useEffect } from "react";
+import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Pokecard from "./components/pokecard";
 import SinglePoke from "./pages/SinglePoke";
-// import Home from "./pages/Home";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Pokecard />} />
+        <Route path="/" element={<Home />} />
         <Route path="/pokemon/:pokemonID" element={<SinglePoke />} />
       </Routes>
     </ Router>
