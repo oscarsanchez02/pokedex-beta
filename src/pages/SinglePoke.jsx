@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { fetchPokemonById } from "../api";
 import { useParams, useNavigate } from "react-router-dom";
+import backgroundImage from "../assets/pxfuel.jpg";
+import left from "../assets/chevron_left.svg";
+import right from "../assets/chevron_right.svg";
 
 const typeColors = {
   normal: "#A8A878",
@@ -29,7 +32,6 @@ export default function SinglePoke() {
   const [description, setDescription] = useState(""); // New state to store the description
   const navigate = useNavigate();
 
-
   useEffect(() => {
     async function getPokemon() {
       const data = await fetchPokemonById(pokemonID);
@@ -40,8 +42,12 @@ export default function SinglePoke() {
       const speciesData = await speciesResponse.json();
 
       // Extracting the first flavor text entry
-      const flavorText = speciesData.flavor_text_entries.find(entry => entry.language.name === "en");
-      setDescription(flavorText ? flavorText.flavor_text : "No description available.");
+      const flavorText = speciesData.flavor_text_entries.find(
+        (entry) => entry.language.name === "en"
+      );
+      setDescription(
+        flavorText ? flavorText.flavor_text : "No description available."
+      );
     }
 
     if (pokemonID) {
@@ -64,62 +70,71 @@ export default function SinglePoke() {
     navigate(`/pokemon/${nextID}`);
   };
 
-
   return (
-    <div className="bg-white rounded-lg shadow-lg p-5 text-center">
-      <h2 className="text-2xl font-bold capitalize mb-4">{pokemon.name}</h2>
-      <img
-        className="w-32 h-32 mx-auto mb-4"
-        src={`https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/dream-world/${pokemonID}.svg`}
-        alt={pokemon.name}
-      />
-      <p className="text-xl text-gray-700">ID: {pokemon.id}</p>
-      <p>{pokemon.weight}</p>
-
-      {/* Buttons for previous and next */}
-      <div className="mb-4">
-        <button
-          onClick={goToPrevPokemon}
-          className="px-4 py-2 bg-blue-500 text-white rounded mr-4"
-        >
-          Previous
-        </button>
-        <button
-          onClick={goToNextPokemon}
-          className="px-4 py-2 bg-blue-500 text-white rounded"
-        >
-          Next
-        </button>
-      </div>
-      <div className="mt-4">
-        <h3 className="text-lg font-semibold">Description:</h3>
-        <p className="text-gray-700 italic">{description.replace(/\f/g, " ")}</p>
-      </div>
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold">Types:</h3>
-        <div className="flex justify-center gap-2">
-          {" "}
-          {pokemon.types.map((type) => (
-            <span
-              key={type.type.name}
-              className="px-4 py-2 text-white rounded-full"
-              style={{ backgroundColor: typeColors[type.type.name] }}
-            >
-              {" "}
-              {type.type.name}{" "}
-            </span>
-          ))}{" "}
+    <div>
+      {" "}
+      <div
+        className=" min-h-screen items-center justify-center"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {" "}
+        <div className="grid grid-cols-2 gap-x-8 p-8">
+          <div className=" text-center text-2xl border-2 border-solid rounded-lg border-yellow-500 inset-shadow-sm inset-shadow-yellow-500 bg-yellow-500/25 p-2">
+            <h1 className="capitalize">Name: {pokemon.name}</h1>
+            <p>ID: {pokemon.id}</p>
+            <p>Height: {pokemon.height}</p>
+            <p>Weight: {pokemon.weight}</p>
+          </div>
+          {/* Buttons for previous and next */}
+          <div className=" text-center border-2 border-solid rounded-lg border-yellow-500 inset-shadow-sm inset-shadow-yellow-500 bg-yellow-500/25 p-2 ">
+            {" "}
+            <h3 className="text-2xl ">Type:</h3>
+            {pokemon.types.map((type) => (
+              <span
+                key={type.type.name}
+                className="px-4 text-white rounded-full mx-2"
+                style={{ backgroundColor: typeColors[type.type.name] }}
+              >
+                {" "}
+                {type.type.name}
+              </span>
+            ))}
+            <h3 className="text-2xl">Abilities:</h3>
+            {pokemon.abilities.map((abilities, index) => {
+              return (
+                <div key={index} className="text-2xl">
+                  <div>{abilities.ability.name}</div>
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-      <div>
-        <h3 className="text-lg font-semibold">Abilities:</h3>
-        {pokemon.abilities.map((abilities, index) => {
-          return (
-            <div key={index}>
-              <div>{abilities.ability.name}</div>
-            </div>
-          );
-        })}
+        <div className="flex justify-center object-center">
+          <button onClick={goToPrevPokemon}>
+            <img src={left} />
+          </button>
+          <div className="text-center">
+            {" "}
+            <img
+              className="w-96 h-96 "
+              src={`https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/dream-world/${pokemonID}.svg`}
+              alt={pokemon.name}
+            />{" "}
+          </div>
+          <button onClick={goToNextPokemon}>
+            <img src={right} className="" />
+          </button>
+        </div>{" "}
+        <div className="text-center my-5 border-2 border-solid rounded-lg border-yellow-500 inset-shadow-sm inset-shadow-yellow-500 bg-yellow-500/25 p-2 ">
+          <h3 className="text-lg  font-semibold">Description:</h3>
+          <p className=" text-gray-700 italic">
+            {description.replace(/\f/g, " ")}
+          </p>
+        </div>
       </div>
     </div>
   );

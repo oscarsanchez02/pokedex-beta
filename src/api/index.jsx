@@ -31,23 +31,18 @@ export async function fetchPokemoninfo() {
   }
 }
 
-
-
 export async function fetchPokemonById(id) {
   try {
     const response = await fetch(`${APIURL}pokemon/${id}`);
     if (!response.ok) throw new Error(`Failed to fetch Pokémon with ID: ${id}`);
     const data = await response.json();
-    console.log("Fetched Pokémon:", data);  // Debugging log
+    console.log("Fetched Pokémon:", data); // Debugging log
     return data; // Return the single Pokémon object
   } catch (error) {
     console.error("Error fetching Pokémon:", error);
     return null; // Return null to indicate failure
   }
 }
-
-
-
 
 /**export async function fetchSingleItem(id) {
     try {
@@ -92,11 +87,11 @@ export async function fetchPokemonById(id) {
 //         }
 //       })
 //     );
-    
+
 //     return pokeDetails.filter((pokemon) => pokemon !== null);
 //   } catch (error) {
 //     console.error("Error fetching Pokémon:", error);
 //     return [];
-    
+
 //   }
 // }
