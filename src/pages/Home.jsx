@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import Pokecard from "../components/Pokecard";
 import { fetchPokemoninfo } from "../api";
 import backgroundImage from "../assets/pxfuel.jpg"; // Import the background image
 import PokeDial from "../components/PokeDial";
@@ -29,7 +28,7 @@ export default function Home() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="w-full max-w-4xl p-6 overflow-auto">
+      <div>
         <PokeDial pokemons={pokemons} />
       </div>
     </div>

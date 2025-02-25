@@ -11,7 +11,7 @@ export default function Pokecard({ pokemon, isSelected }) {
 
   return (
     <div
-      className={`flex items-center bg-amber-400 rounded-lg shadow-lg p-4 w-100 
+      className={`flex justify-center items-center bg-amber-400 rounded-lg shadow-lg p-4 
       ${isSelected ? "cursor-pointer hover:bg-gray-200" : "opacity-50 cursor-not-allowed"}`}
       onClick={() => handleClick(pokemon.id)}
     >
