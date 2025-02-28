@@ -70,11 +70,17 @@ export default function SinglePoke() {
     navigate(`/pokemon/${nextID}`);
   };
 
+  const cryUrl = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${pokemon.id}.ogg`;
+  const playCry = () => {
+    const cryAudio = new Audio(cryUrl);
+    cryAudio.play();
+  };
+
   return (
     <div>
       {" "}
       <div
-        className=" min-h-screen items-center justify-center"
+        className=" jersey-10-regular min-h-screen items-center justify-center"
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
@@ -83,57 +89,94 @@ export default function SinglePoke() {
       >
         {" "}
         <div className="grid grid-cols-2 gap-x-8 p-8">
-          <div className=" text-center text-2xl border-2 border-solid rounded-lg border-yellow-500 inset-shadow-sm inset-shadow-yellow-500 bg-yellow-500/25 p-2">
-            <h1 className="capitalize">Name: {pokemon.name}</h1>
-            <p>ID: {pokemon.id}</p>
-            <p>Height: {pokemon.height}</p>
-            <p>Weight: {pokemon.weight}</p>
+          <div className=" grid grid-cols-3 text-left text-2xl border-2 border-solid rounded-lg border-yellow-500 inset-shadow-sm inset-shadow-yellow-500 bg-yellow-500/25 p-2">
+            <div className="text-2xl col-span-2 underline decoration-dashed capitalize">
+              Name:
+            </div>
+            <p className="capitalize">{pokemon.name}</p>
+            <h1 className="text-2xl col-span-2 underline decoration-dashed">
+              ID:
+            </h1>
+            {pokemon.id}
+            <p className="text-2xl col-span-2 underline decoration-dashed">
+              Height:
+            </p>
+            {pokemon.height}m
+            <p className="text-2xl col-span-2 underline decoration-dashed">
+              Weight:
+            </p>
+            {pokemon.weight}kg
+            <p className="text-2xl col-span-2 underline decoration-dashed">
+              {" "}
+              Base experience:
+            </p>{" "}
+            {pokemon.base_experience}
           </div>
-          {/* Buttons for previous and next */}
-          <div className=" text-center border-2 border-solid rounded-lg border-yellow-500 inset-shadow-sm inset-shadow-yellow-500 bg-yellow-500/25 p-2 ">
+          <div className="grid grid-cols-3 text-left border-2 border-solid rounded-lg border-yellow-500 inset-shadow-sm inset-shadow-yellow-500 bg-yellow-500/25 p-2 ">
             {" "}
-            <h3 className="text-2xl ">Type:</h3>
+            <h3 className="text-2xl col-span-3 underline decoration-dashed">
+              Type:
+            </h3>
             {pokemon.types.map((type) => (
               <span
                 key={type.type.name}
-                className="px-4 text-white rounded-full mx-2"
+                className="w-16 text-center rounded-lg text-lg capitalize"
                 style={{ backgroundColor: typeColors[type.type.name] }}
               >
                 {" "}
                 {type.type.name}
               </span>
             ))}
-            <h3 className="text-2xl">Abilities:</h3>
+            <h3 className="text-2xl col-span-3 underline decoration-dashed">
+              Abilities:
+            </h3>
             {pokemon.abilities.map((abilities, index) => {
               return (
-                <div key={index} className="text-2xl">
-                  <div>{abilities.ability.name}</div>
-                </div>
+                <span key={index} className="text-lg capitalize">
+                  <span>{abilities.ability.name}</span>
+                </span>
+              );
+            })}
+            <h3 className="text-2xl col-span-3 underline decoration-dashed">
+              Stats:
+            </h3>
+            {pokemon.stats.map((stat, index) => {
+              return (
+                <ul key={index} className="text-lg capitalize">
+                  <li>
+                    {stat.stat.name}: {stat.base_stat}
+                  </li>
+                </ul>
               );
             })}
           </div>
         </div>
         <div className="flex justify-center object-center">
           <button onClick={goToPrevPokemon}>
-            <img src={left} />
+            <img
+              src={left}
+              className="transition delay-150 duration-300 ease-in-out hover:-translate-x-5 hover:scale-110"
+            />
           </button>
           <div className="text-center">
             {" "}
             <img
-              className="w-96 h-96 "
+              className="w-96 h-96 cursor-pointer"
+              onClick={playCry}
               src={`https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/dream-world/${pokemonID}.svg`}
               alt={pokemon.name}
             />{" "}
           </div>
           <button onClick={goToNextPokemon}>
-            <img src={right} className="" />
+            <img
+              src={right}
+              className=" transition delay-150 duration-300 ease-in-out hover:translate-x-5 hover:scale-110"
+            />
           </button>
         </div>{" "}
         <div className="text-center my-5 border-2 border-solid rounded-lg border-yellow-500 inset-shadow-sm inset-shadow-yellow-500 bg-yellow-500/25 p-2 ">
-          <h3 className="text-lg  font-semibold">Description:</h3>
-          <p className=" text-gray-700 italic">
-            {description.replace(/\f/g, " ")}
-          </p>
+          <h3 className="text-2xl">Description:</h3>
+          <p className=" text-2xl italic">{description.replace(/\f/g, " ")}</p>
         </div>
       </div>
     </div>
